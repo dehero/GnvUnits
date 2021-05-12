@@ -132,7 +132,7 @@ begin
 	Result := GUIDToString(GUID);
 
 	if not Hyphen then
-		Result := Copy(Result, 1, 9) + Copy(Result, 11, 4) + Copy(Result, 16, 4) + Copy(Result, 21, 4) + Copy(Result, 26, 12);
+		Result := Copy(Result, 1, 9) + Copy(Result, 11, 4) + Copy(Result, 16, 4) + Copy(Result, 21, 4) + Copy(Result, 26, 12) + Copy(Result, 37, 1);
 
 	if not Brackets then Result := Copy(Result, 2, Length(Result) - 2);
 
