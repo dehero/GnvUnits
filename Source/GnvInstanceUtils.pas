@@ -55,9 +55,9 @@ begin
   InstanceMapHandle := OpenFileMapping(FILE_MAP_ALL_ACCESS, False, PChar(GnvInstanceName));
   if InstanceMapHandle <> 0 then
   begin
-		InstanceHandle := MapViewOfFile(InstanceMapHandle, FILE_MAP_ALL_ACCESS, 0, 0, SizeOf(THandle));
-		PostMessage(InstanceHandle^, Msg, 0, 0);
-		if IsIconic(InstanceHandle^) then ShowWindow(InstanceHandle^, SW_RESTORE);
+    InstanceHandle := MapViewOfFile(InstanceMapHandle, FILE_MAP_ALL_ACCESS, 0, 0, SizeOf(THandle));
+    PostMessage(InstanceHandle^, Msg, 0, 0);
+    if IsIconic(InstanceHandle^) then ShowWindow(InstanceHandle^, SW_RESTORE);
     SetForegroundWindow(InstanceHandle^);
   end;
 end;

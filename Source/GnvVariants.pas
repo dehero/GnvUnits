@@ -20,7 +20,7 @@ end;
 
 function GnvVarToIntDef(const V: Variant; const ADefault: Integer): Integer;
 begin
-	if VarIsNumeric(V) then
+  if VarIsNumeric(V) then
     Result := V
   else
     Result := ADefault;

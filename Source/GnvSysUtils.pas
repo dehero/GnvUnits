@@ -14,7 +14,7 @@ type
   TFileSize = Int64;
 
 const
-	GNV_CP_IDENTS_MAX = 140;
+  GNV_CP_IDENTS_MAX = 140;
 
   GNV_CP_IDENTS: array[0..GNV_CP_IDENTS_MAX - 1] of TGnvCPIdentData =
   (
@@ -158,7 +158,7 @@ const
     (CodePage: 57011; Ident: 'x-iscii-pa'),
     (CodePage: 65000; Ident: 'utf-7'),
     (CodePage: 65001; Ident: 'utf-8')
-	);
+  );
 
 procedure GnvReverseBytes(Source, Dest: Pointer; Size: Cardinal);
 
@@ -179,17 +179,17 @@ function GnvGetLocaleInfo(LCID: Cardinal; Field: Cardinal): string;
 implementation
 
 uses
-	SysUtils;
+  SysUtils;
 
 procedure GnvReverseBytes(Source, Dest: Pointer; Size: Cardinal);
 begin
-	Dest := PByte(NativeUInt(Dest) + Size - 1);
-	while Size > 0 do
-	begin
-		PByte(Dest)^ := PByte(Source)^;
-		Inc(PByte(Source));
-		Dec(PByte(Dest));
-		Dec(Size);
+  Dest := PByte(NativeUInt(Dest) + Size - 1);
+  while Size > 0 do
+  begin
+    PByte(Dest)^ := PByte(Source)^;
+    Inc(PByte(Source));
+    Dec(PByte(Dest));
+    Dec(Size);
   end;
 end;
 
@@ -200,7 +200,7 @@ var
   Handle: THandle;
   Func: TLocaleNameToLCID;
 begin
-	Result := LOCALE_USER_DEFAULT;
+  Result := LOCALE_USER_DEFAULT;
   Handle := INVALID_HANDLE_VALUE;
   try
     if Win32MajorVersion >= 6 then
@@ -222,20 +222,20 @@ end;
 
 function GnvLCIDToLocaleName(LCID: Cardinal): string;
 var
-	Buffer: array[0..254] of Char;
+  Buffer: array[0..254] of Char;
 begin
-	GetLocaleInfo(LCID, LOCALE_SISO639LANGNAME, Buffer, 255);
-	Result := Buffer;
-	GetLocaleInfo(LCID, LOCALE_SISO3166CTRYNAME, Buffer, 255);
-	Result := Result + '-' + Buffer;
+  GetLocaleInfo(LCID, LOCALE_SISO639LANGNAME, Buffer, 255);
+  Result := Buffer;
+  GetLocaleInfo(LCID, LOCALE_SISO3166CTRYNAME, Buffer, 255);
+  Result := Result + '-' + Buffer;
 end;
 
 function GnvGetLocaleInfo(LCID: Cardinal; Field: Cardinal): string;
 var
-	Buffer: array[0..254] of Char;
+  Buffer: array[0..254] of Char;
 begin
-	GetLocaleInfo(LCID, Field, Buffer, 255);
-	Result := Buffer;
+  GetLocaleInfo(LCID, Field, Buffer, 255);
+  Result := Buffer;
 end;
 
 function GnvCPToStr(CodePage: Integer): string;

@@ -104,58 +104,58 @@ begin
 end;
 
 function GnvCreateGUIDStr(UpperCase: Boolean = False;
-	Hyphen: Boolean = False; Brackets: Boolean = False): string;
+  Hyphen: Boolean = False; Brackets: Boolean = False): string;
 const
-	Chars = '0123456789abcdef';
+  Chars = '0123456789abcdef';
 var
-//	I: Integer;
-	GUID: TGUID;
+// I: Integer;
+  GUID: TGUID;
 begin
-	CreateGUID(GUID);
-	Result := GUIDToString(GUID);
+  CreateGUID(GUID);
+  Result := GUIDToString(GUID);
 
-	if not Hyphen then
-		Result := Copy(Result, 1, 9) + Copy(Result, 11, 4) + Copy(Result, 16, 4) + Copy(Result, 21, 4) + Copy(Result, 26, 12);
+  if not Hyphen then
+    Result := Copy(Result, 1, 9) + Copy(Result, 11, 4) + Copy(Result, 16, 4) + Copy(Result, 21, 4) + Copy(Result, 26, 12);
 
-	if not Brackets then Result := Copy(Result, 2, Length(Result) - 1);
+  if not Brackets then Result := Copy(Result, 2, Length(Result) - 1);
 {
-	Randomize;
-	SetLength(Result, 36);
-	for I := 1 to 36 do
-		Result[I] := Chars[Random(16) + 1];
+  Randomize;
+  SetLength(Result, 36);
+  for I := 1 to 36 do
+    Result[I] := Chars[Random(16) + 1];
 }
 end;
 
 function GnvGUIDToStr(GUID: TGUID; UpperCase: Boolean = False;
   Hyphen: Boolean = False; Brackets: Boolean = False): string;
 begin
-	Result := GUIDToString(GUID);
+  Result := GUIDToString(GUID);
 
-	if not Hyphen then
-		Result := Copy(Result, 1, 9) + Copy(Result, 11, 4) + Copy(Result, 16, 4) + Copy(Result, 21, 4) + Copy(Result, 26, 12) + Copy(Result, 37, 1);
+  if not Hyphen then
+    Result := Copy(Result, 1, 9) + Copy(Result, 11, 4) + Copy(Result, 16, 4) + Copy(Result, 21, 4) + Copy(Result, 26, 12) + Copy(Result, 37, 1);
 
-	if not Brackets then Result := Copy(Result, 2, Length(Result) - 2);
+  if not Brackets then Result := Copy(Result, 2, Length(Result) - 2);
 
-	if not UpperCase then Result := LowerCase(Result);
+  if not UpperCase then Result := LowerCase(Result);
 
 
 (*
-	if Hyphen then
-		Result :=
-			Format('%0.8x-%0.4x-%0.4x-%0.2x%0.2x-%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x', [
-				GUID.D1, GUID.D2, GUID.D3,
-				GUID.D4[0], GUID.D4[1], GUID.D4[2], GUID.D4[3],
-				GUID.D4[4], GUID.D4[5], GUID.D4[6], GUID.D4[7]])
-	else
-		Result :=
-			Format('%0.8x%0.4x%0.4x%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x', [
-				GUID.D1, GUID.D2, GUID.D3,
-				GUID.D4[0], GUID.D4[1], GUID.D4[2], GUID.D4[3],
-				GUID.D4[4], GUID.D4[5], GUID.D4[6], GUID.D4[7]]);
+  if Hyphen then
+    Result :=
+      Format('%0.8x-%0.4x-%0.4x-%0.2x%0.2x-%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x', [
+        GUID.D1, GUID.D2, GUID.D3,
+        GUID.D4[0], GUID.D4[1], GUID.D4[2], GUID.D4[3],
+        GUID.D4[4], GUID.D4[5], GUID.D4[6], GUID.D4[7]])
+  else
+    Result :=
+      Format('%0.8x%0.4x%0.4x%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x%0.2x', [
+        GUID.D1, GUID.D2, GUID.D3,
+        GUID.D4[0], GUID.D4[1], GUID.D4[2], GUID.D4[3],
+        GUID.D4[4], GUID.D4[5], GUID.D4[6], GUID.D4[7]]);
 
-	if not UpperCase then Result := LowerCase(Result);
+  if not UpperCase then Result := LowerCase(Result);
 
-	if Brackets then Result := '{' + Result + '}';
+  if Brackets then Result := '{' + Result + '}';
 *)
 end;
 
@@ -220,7 +220,7 @@ end;
 
 function GnvPosTextEx(const SubText, Text: string; Offset: Integer = 1): Integer;
 begin
-	Result := PosEx(WideUpperCase(SubText), WideUpperCase(Text), Offset);
+  Result := PosEx(WideUpperCase(SubText), WideUpperCase(Text), Offset);
 end;
 
 function GnvStrToGUID(const Str: string; RemoveSeparators: Boolean = False): TGUID;
@@ -323,17 +323,17 @@ end;
 
 function GnvCapitalizeStr(const Str: string): string;
 begin
-	Result := '';
-	if Str <> '' then
-		Result := UpperCase(Str[1]) + LowerCase(MidStr(Str, 2, Length(Str) - 1));
+  Result := '';
+  if Str <> '' then
+    Result := UpperCase(Str[1]) + LowerCase(MidStr(Str, 2, Length(Str) - 1));
 end;
 
 function GnvLongestStr(const Str1, Str2: string): string;
 begin
-	if Length(Str1) > Length(Str2) then
-		Result := Str1
-	else
-  	Result := Str2;
+  if Length(Str1) > Length(Str2) then
+    Result := Str1
+  else
+    Result := Str2;
 end;
 
 function GnvNumberedFormat(const Format: string; const Arguments: array of const): string;
@@ -414,149 +414,149 @@ const
   // 20: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);
   // 21: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);
   Rules: array[0..142] of TRule = (
-    (Language: 'en';		Number: 0),
-    (Language: 'af';		Number: 0),
-    (Language: 'an';		Number: 0),
-    (Language: 'anp';		Number: 0),
-    (Language: 'as';		Number: 0),
-    (Language: 'ast';		Number: 0),
-    (Language: 'az';		Number: 0),
-    (Language: 'bg';		Number: 0),
-    (Language: 'bn';		Number: 0),
-    (Language: 'brx';		Number: 0),
-    (Language: 'ca';		Number: 0),
-    (Language: 'da';		Number: 0),
-    (Language: 'de';		Number: 0),
-    (Language: 'doi';		Number: 0),
-    (Language: 'el';		Number: 0),
-    (Language: 'eo';		Number: 0),
-    (Language: 'es';		Number: 0),
-    (Language: 'es-ar';	Number: 0),
-    (Language: 'et';		Number: 0),
-    (Language: 'eu';		Number: 0),
-    (Language: 'ff';		Number: 0),
-    (Language: 'fi';		Number: 0),
-    (Language: 'fo';		Number: 0),
-    (Language: 'fur';		Number: 0),
-    (Language: 'fy';		Number: 0),
-    (Language: 'gl';		Number: 0),
-    (Language: 'gu';		Number: 0),
-    (Language: 'ha';		Number: 0),
-    (Language: 'he';		Number: 0),
-    (Language: 'hi';		Number: 0),
-    (Language: 'hne';		Number: 0),
-    (Language: 'hu';		Number: 0),
-    (Language: 'hy';		Number: 0),
-    (Language: 'ia';		Number: 0),
-    (Language: 'it';		Number: 0),
-    (Language: 'kk';		Number: 0),
-    (Language: 'kl';		Number: 0),
-    (Language: 'kn';		Number: 0),
-    (Language: 'ku';		Number: 0),
-    (Language: 'ky';		Number: 0),
-    (Language: 'lb';		Number: 0),
-    (Language: 'mai';		Number: 0),
-    (Language: 'ml';		Number: 0),
-    (Language: 'mn';		Number: 0),
-    (Language: 'mni';		Number: 0),
-    (Language: 'mr';		Number: 0),
-    (Language: 'nah';		Number: 0),
-    (Language: 'nap';		Number: 0),
-    (Language: 'nb';		Number: 0),
-    (Language: 'ne';		Number: 0),
-    (Language: 'nl';		Number: 0),
-    (Language: 'nn';		Number: 0),
-    (Language: 'no';		Number: 0),
-    (Language: 'nso';		Number: 0),
-    (Language: 'or';		Number: 0),
-    (Language: 'pa';		Number: 0),
-    (Language: 'pap';		Number: 0),
-    (Language: 'pms';		Number: 0),
-    (Language: 'ps';		Number: 0),
-    (Language: 'pt';		Number: 0),
-    (Language: 'rm';		Number: 0),
-    (Language: 'rw';		Number: 0),
-    (Language: 'sat';		Number: 0),
-    (Language: 'sco';		Number: 0),
-    (Language: 'sd';		Number: 0),
-    (Language: 'se';		Number: 0),
-    (Language: 'si';		Number: 0),
-    (Language: 'so';		Number: 0),
-    (Language: 'son';		Number: 0),
-    (Language: 'sq';		Number: 0),
-    (Language: 'sv';		Number: 0),
-    (Language: 'sw';		Number: 0),
-    (Language: 'ta';		Number: 0),
-    (Language: 'te';		Number: 0),
-    (Language: 'tk';		Number: 0),
-    (Language: 'ur';		Number: 0),
-    (Language: 'yo';		Number: 0),
-    (Language: 'ach';		Number: 1),
-    (Language: 'ak';		Number: 1),
-    (Language: 'am';		Number: 1),
-    (Language: 'arn';		Number: 1),
-    (Language: 'br';		Number: 1),
-    (Language: 'fa';		Number: 1),
-    (Language: 'fil';		Number: 1),
-    (Language: 'fr';		Number: 1),
-    (Language: 'gun';		Number: 1),
-    (Language: 'ln';		Number: 1),
-    (Language: 'mfe';		Number: 1),
-    (Language: 'mg';		Number: 1),
-    (Language: 'mi';		Number: 1),
-    (Language: 'oc';		Number: 1),
-    (Language: 'pt-br';	Number: 1),
-    (Language: 'tg';		Number: 1),
-    (Language: 'ti';		Number: 1),
-    (Language: 'tr';		Number: 1),
-    (Language: 'uz';		Number: 1),
+    (Language: 'en';    Number: 0),
+    (Language: 'af';    Number: 0),
+    (Language: 'an';    Number: 0),
+    (Language: 'anp';   Number: 0),
+    (Language: 'as';    Number: 0),
+    (Language: 'ast';   Number: 0),
+    (Language: 'az';    Number: 0),
+    (Language: 'bg';    Number: 0),
+    (Language: 'bn';    Number: 0),
+    (Language: 'brx';   Number: 0),
+    (Language: 'ca';    Number: 0),
+    (Language: 'da';    Number: 0),
+    (Language: 'de';    Number: 0),
+    (Language: 'doi';   Number: 0),
+    (Language: 'el';    Number: 0),
+    (Language: 'eo';    Number: 0),
+    (Language: 'es';    Number: 0),
+    (Language: 'es-ar'; Number: 0),
+    (Language: 'et';    Number: 0),
+    (Language: 'eu';    Number: 0),
+    (Language: 'ff';    Number: 0),
+    (Language: 'fi';    Number: 0),
+    (Language: 'fo';    Number: 0),
+    (Language: 'fur';   Number: 0),
+    (Language: 'fy';    Number: 0),
+    (Language: 'gl';    Number: 0),
+    (Language: 'gu';    Number: 0),
+    (Language: 'ha';    Number: 0),
+    (Language: 'he';    Number: 0),
+    (Language: 'hi';    Number: 0),
+    (Language: 'hne';   Number: 0),
+    (Language: 'hu';    Number: 0),
+    (Language: 'hy';    Number: 0),
+    (Language: 'ia';    Number: 0),
+    (Language: 'it';    Number: 0),
+    (Language: 'kk';    Number: 0),
+    (Language: 'kl';    Number: 0),
+    (Language: 'kn';    Number: 0),
+    (Language: 'ku';    Number: 0),
+    (Language: 'ky';    Number: 0),
+    (Language: 'lb';    Number: 0),
+    (Language: 'mai';   Number: 0),
+    (Language: 'ml';    Number: 0),
+    (Language: 'mn';    Number: 0),
+    (Language: 'mni';   Number: 0),
+    (Language: 'mr';    Number: 0),
+    (Language: 'nah';   Number: 0),
+    (Language: 'nap';   Number: 0),
+    (Language: 'nb';    Number: 0),
+    (Language: 'ne';    Number: 0),
+    (Language: 'nl';    Number: 0),
+    (Language: 'nn';    Number: 0),
+    (Language: 'no';    Number: 0),
+    (Language: 'nso';   Number: 0),
+    (Language: 'or';    Number: 0),
+    (Language: 'pa';    Number: 0),
+    (Language: 'pap';   Number: 0),
+    (Language: 'pms';   Number: 0),
+    (Language: 'ps';    Number: 0),
+    (Language: 'pt';    Number: 0),
+    (Language: 'rm';    Number: 0),
+    (Language: 'rw';    Number: 0),
+    (Language: 'sat';   Number: 0),
+    (Language: 'sco';   Number: 0),
+    (Language: 'sd';    Number: 0),
+    (Language: 'se';    Number: 0),
+    (Language: 'si';    Number: 0),
+    (Language: 'so';    Number: 0),
+    (Language: 'son';   Number: 0),
+    (Language: 'sq';    Number: 0),
+    (Language: 'sv';    Number: 0),
+    (Language: 'sw';    Number: 0),
+    (Language: 'ta';    Number: 0),
+    (Language: 'te';    Number: 0),
+    (Language: 'tk';    Number: 0),
+    (Language: 'ur';    Number: 0),
+    (Language: 'yo';    Number: 0),
+    (Language: 'ach';   Number: 1),
+    (Language: 'ak';    Number: 1),
+    (Language: 'am';    Number: 1),
+    (Language: 'arn';   Number: 1),
+    (Language: 'br';    Number: 1),
+    (Language: 'fa';    Number: 1),
+    (Language: 'fil';   Number: 1),
+    (Language: 'fr';    Number: 1),
+    (Language: 'gun';   Number: 1),
+    (Language: 'ln';    Number: 1),
+    (Language: 'mfe';   Number: 1),
+    (Language: 'mg';    Number: 1),
+    (Language: 'mi';    Number: 1),
+    (Language: 'oc';    Number: 1),
+    (Language: 'pt-br'; Number: 1),
+    (Language: 'tg';    Number: 1),
+    (Language: 'ti';    Number: 1),
+    (Language: 'tr';    Number: 1),
+    (Language: 'uz';    Number: 1),
     (Language: 'wa';    Number: 1),
-    (Language: 'zh';		Number: 2),
-    (Language: 'ay';		Number: 2),
-    (Language: 'bo';		Number: 2),
-    (Language: 'cgg';		Number: 2),
-    (Language: 'dz';		Number: 2),
-    (Language: 'id';		Number: 2),
-    (Language: 'ja';		Number: 2),
-    (Language: 'jbo';		Number: 2),
-    (Language: 'ka';		Number: 2),
-    (Language: 'km';		Number: 2),
-    (Language: 'ko';		Number: 2),
-    (Language: 'lo';		Number: 2),
-    (Language: 'ms';		Number: 2),
-    (Language: 'my';		Number: 2),
-    (Language: 'sah';		Number: 2),
-    (Language: 'su';		Number: 2),
-    (Language: 'th';		Number: 2),
-    (Language: 'tt';		Number: 2),
-    (Language: 'ug';		Number: 2),
-    (Language: 'vi';		Number: 2),
-    (Language: 'wo';		Number: 2),
-    (Language: 'ru';		Number: 3),
-    (Language: 'uk';		Number: 3),
-    (Language: 'be';		Number: 3),
-    (Language: 'bs';		Number: 3),
-    (Language: 'hr';		Number: 3),
-    (Language: 'sr';		Number: 3),
-    (Language: 'cs';		Number: 4),
-    (Language: 'sk';		Number: 4),
-    (Language: 'ar';		Number: 5),
-    (Language: 'csb';		Number: 6),
-    (Language: 'cy';		Number: 7),
-    (Language: 'ga';		Number: 8),
-    (Language: 'gd';		Number: 9),
-    (Language: 'is';		Number: 10),
-    (Language: 'jv';		Number: 11),
-    (Language: 'kw';		Number: 12),
-    (Language: 'lt';		Number: 13),
-    (Language: 'lv';		Number: 14),
-    (Language: 'me';		Number: 15),
-    (Language: 'mk';		Number: 16),
-    (Language: 'mnk';		Number: 17),
-    (Language: 'mt';		Number: 18),
-    (Language: 'pl';		Number: 19),
-    (Language: 'ro';		Number: 20),
-    (Language: 'sl';		Number: 21)
+    (Language: 'zh';    Number: 2),
+    (Language: 'ay';    Number: 2),
+    (Language: 'bo';    Number: 2),
+    (Language: 'cgg';   Number: 2),
+    (Language: 'dz';    Number: 2),
+    (Language: 'id';    Number: 2),
+    (Language: 'ja';    Number: 2),
+    (Language: 'jbo';   Number: 2),
+    (Language: 'ka';    Number: 2),
+    (Language: 'km';    Number: 2),
+    (Language: 'ko';    Number: 2),
+    (Language: 'lo';    Number: 2),
+    (Language: 'ms';    Number: 2),
+    (Language: 'my';    Number: 2),
+    (Language: 'sah';   Number: 2),
+    (Language: 'su';    Number: 2),
+    (Language: 'th';    Number: 2),
+    (Language: 'tt';    Number: 2),
+    (Language: 'ug';    Number: 2),
+    (Language: 'vi';    Number: 2),
+    (Language: 'wo';    Number: 2),
+    (Language: 'ru';    Number: 3),
+    (Language: 'uk';    Number: 3),
+    (Language: 'be';    Number: 3),
+    (Language: 'bs';    Number: 3),
+    (Language: 'hr';    Number: 3),
+    (Language: 'sr';    Number: 3),
+    (Language: 'cs';    Number: 4),
+    (Language: 'sk';    Number: 4),
+    (Language: 'ar';    Number: 5),
+    (Language: 'csb';   Number: 6),
+    (Language: 'cy';    Number: 7),
+    (Language: 'ga';    Number: 8),
+    (Language: 'gd';    Number: 9),
+    (Language: 'is';    Number: 10),
+    (Language: 'jv';    Number: 11),
+    (Language: 'kw';    Number: 12),
+    (Language: 'lt';    Number: 13),
+    (Language: 'lv';    Number: 14),
+    (Language: 'me';    Number: 15),
+    (Language: 'mk';    Number: 16),
+    (Language: 'mnk';   Number: 17),
+    (Language: 'mt';    Number: 18),
+    (Language: 'pl';    Number: 19),
+    (Language: 'ro';    Number: 20),
+    (Language: 'sl';    Number: 21)
   );
 var
   I, P, N, Plural, Rule: Integer;

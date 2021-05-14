@@ -3,7 +3,7 @@ unit GnvSerialization;
 interface
 
 uses
-	Classes, SysUtils;
+  Classes, SysUtils;
 
 type
   TStringLengthSize = 1..4;
@@ -25,12 +25,12 @@ implementation
 
 function GnvClearBit(const Value, Bit: Byte): Byte;
 begin
-	Result := Value and not (1 shl Bit);
+  Result := Value and not (1 shl Bit);
 end;
 
 function GnvToggleBit(const Value, Bit: Byte; const Flag: Boolean): Byte;
 begin
-	Result := (Value or (1 shl Bit)) xor (Byte(not Flag) shl Bit);
+  Result := (Value or (1 shl Bit)) xor (Byte(not Flag) shl Bit);
 end;
 
 function GnvGetBit(const Value, Bit: Byte): Boolean;
@@ -40,7 +40,7 @@ end;
 
 function GnvSetBit(const Value, Bit: Byte): Byte;
 begin
-	Result := Value or (1 shl Bit);
+  Result := Value or (1 shl Bit);
 end;
 
 function GnvAnsiStrFromStream(Stream: TStream; Size: TStringLengthSize): AnsiString;
@@ -64,8 +64,8 @@ var
   P: PAnsiChar;
   L: LongWord;
 begin
-	P := PAnsiChar(Str);
-	L := 0;
+  P := PAnsiChar(Str);
+  L := 0;
   L := Length(P);
   // Writing string length, maximal length is 4294967295 (LongWord)
   Stream.Write(L, Size);
@@ -78,15 +78,15 @@ var
   P: PWideChar;
   L: LongWord;
 begin
-	// Fill length buffer with zeros because
-	// it can be read partially due to variable Size
-	L := 0;
-	// Reading string length
-	Stream.Read(L, Size);
-	// Reading string
-	SetLength(Result, L);
-	P := PWideChar(Result);
-	Stream.Read(P^, L * 2);
+  // Fill length buffer with zeros because
+  // it can be read partially due to variable Size
+  L := 0;
+  // Reading string length
+  Stream.Read(L, Size);
+  // Reading string
+  SetLength(Result, L);
+  P := PWideChar(Result);
+  Stream.Read(P^, L * 2);
 end;
 
 procedure GnvWideStrToStream(const Str: UnicodeString; Stream: TStream; Size: TStringLengthSize);
@@ -94,39 +94,39 @@ var
   P: PWideChar;
   L: LongWord;
 begin
-	P := PWideChar(Str);
-	L := 0;
-	L := Length(P);
+  P := PWideChar(Str);
+  L := 0;
+  L := Length(P);
   // Writing string length, maximal length is 4294967295 (LongWord)
   Stream.Write(L, Size);
   // One Unicode symbol takes 2 bytes, so summary
   // byte count is twice larger than string length
-	Stream.Write(P^, L*2);
+  Stream.Write(P^, L*2);
 end;
 
 function GnvStrFromFile(const FileName: string; DefaultEncoding: TEncoding): string;
 var
-	Stream: TStream;
-	Size: Integer;
-	Buffer: TBytes;
+  Stream: TStream;
+  Size: Integer;
+  Buffer: TBytes;
   Encoding: TEncoding;
 begin
-	Stream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+  Stream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
 
-	try
-		Size := Stream.Size - Stream.Position;
-		SetLength(Buffer, Size);
-		Stream.Read(Buffer[0], Size);
+  try
+    Size := Stream.Size - Stream.Position;
+    SetLength(Buffer, Size);
+    Stream.Read(Buffer[0], Size);
 
     Encoding := nil;
-		Size := TEncoding.GetBufferEncoding(Buffer, Encoding);
+    Size := TEncoding.GetBufferEncoding(Buffer, Encoding);
     if Size > 0 then
       Result := Encoding.GetString(Buffer, Size, Length(Buffer) - Size)
     else
-  		Result := DefaultEncoding.GetString(Buffer);
-	finally
-		Stream.Free;
-	end;
+      Result := DefaultEncoding.GetString(Buffer);
+  finally
+    Stream.Free;
+  end;
 end;
 
 procedure GnvStrToFile(const FileName: string; const Str: string; Encoding: TEncoding);

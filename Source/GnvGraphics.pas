@@ -52,7 +52,7 @@ begin
   G := G2 + (G1 - G2) * Value div 256;
   B := B2 + (B1 - B2) * Value div 256;
 
-	Result := RGB(R, G, B);
+  Result := RGB(R, G, B);
 end;
 
 function GnvColorToHex(Color: TColor): string;

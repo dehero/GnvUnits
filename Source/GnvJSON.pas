@@ -109,9 +109,9 @@ type
   TGnvJSONNextCharFunc = function: WideChar of object;
 
   TGnvJSONData = class(TPersistent)
-	private
+  private
     FDataType: TGnvJSONDataType;
-  	FOverridden: Boolean;
+    FOverridden: Boolean;
     FOwner: TGnvJSONData;
     procedure SetItemValue(const Name, Value: Variant);
     function GetObject(const Name: Variant): TGnvJSONObject;
@@ -147,11 +147,11 @@ type
     function ToFormattedString(InitialTabs: Integer = 0; IndentTabs: Integer = 1): string;
     property Arrays[const Name: Variant]: TGnvJSONArray read GetArray;
     property DataType: TGnvJSONDataType read GetDataType;
-		property Items[Index: Integer]: TGnvJSONData read GetItemByIndex;
+    property Items[Index: Integer]: TGnvJSONData read GetItemByIndex;
     property ItemCount: Integer read GetItemCount;
-		property Names[Index: Integer]: string read GetName;
-		property Objects[const Name: Variant]: TGnvJSONObject read GetObject;
-		property Overridden: Boolean read FOverridden;
+    property Names[Index: Integer]: string read GetName;
+    property Objects[const Name: Variant]: TGnvJSONObject read GetObject;
+    property Overridden: Boolean read FOverridden;
     property Owner: TGnvJSONData read FOwner;
     property Value: Variant read GetValue write SetValue;
     property Values[const Name: Variant]: Variant read GetItemValue write SetItemValue; default;
@@ -168,27 +168,27 @@ type
   private
     FItems: TStringList;
     FPositions: TList;
-		function IndexOfData(const AData: TGnvJSONData): Integer;
-	protected
-		procedure AssignTo(Dest: TPersistent); override;
-		procedure DetachChild(Child: TGnvJSONData); override;
-		function DoGetName(Index: Integer): Variant; override;
-		function DoGetItemByIndex(Index: Integer): TGnvJSONData; override;
-		function DoGetItemByName(const Name: Variant): TGnvJSONData; override;
-		function GetItemCount: Integer; override;
-		procedure DoParse(InitialChar: WideChar; const NextChar: TGnvJSONNextCharFunc;
-			var EndingChar: WideChar); override;
-		procedure DoSetValue(Name, Value: Variant); override;
-		procedure WriteTo(Writer: TGnvJSONWriter); override;
-	public
-		constructor Create;
-		destructor Destroy; override;
-		procedure Clear;
-		procedure Add(const AName: Variant; AValue: TGnvJSONData);
-		function AddObject(const Name: Variant): TGnvJSONObject;
-		function AddArray(const Name: Variant): TGnvJSONArray;
-		function AddValue(const Name: Variant): TGnvJSONValue; overload;
-		function GetUnmappedString(Map: TStrings): string;
+    function IndexOfData(const AData: TGnvJSONData): Integer;
+  protected
+    procedure AssignTo(Dest: TPersistent); override;
+    procedure DetachChild(Child: TGnvJSONData); override;
+    function DoGetName(Index: Integer): Variant; override;
+    function DoGetItemByIndex(Index: Integer): TGnvJSONData; override;
+    function DoGetItemByName(const Name: Variant): TGnvJSONData; override;
+    function GetItemCount: Integer; override;
+    procedure DoParse(InitialChar: WideChar; const NextChar: TGnvJSONNextCharFunc;
+      var EndingChar: WideChar); override;
+    procedure DoSetValue(Name, Value: Variant); override;
+    procedure WriteTo(Writer: TGnvJSONWriter); override;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Clear;
+    procedure Add(const AName: Variant; AValue: TGnvJSONData);
+    function AddObject(const Name: Variant): TGnvJSONObject;
+    function AddArray(const Name: Variant): TGnvJSONArray;
+    function AddValue(const Name: Variant): TGnvJSONValue; overload;
+    function GetUnmappedString(Map: TStrings): string;
     function IndexOfName(const AName: string): Integer;
     procedure Merge(Data: TGnvJSONData; RemoveArrayDuplicates: Boolean = False;
       SkipKeys: TStrings = nil); override;
@@ -1215,7 +1215,7 @@ begin
   for I := 0 to ItemCount - 1 do
   begin
     Writer.WriteName(GetName(I));
-		TGnvJSONData(FPositions[I]).WriteTo(Writer);
+    TGnvJSONData(FPositions[I]).WriteTo(Writer);
   end;
   Writer.EndObject;
 end;
@@ -1240,30 +1240,30 @@ end;
 
 function TGnvJSONObject.GetUnmappedString(Map: TStrings): string;
 var
-	I, Unmapped: Integer;
-	Writer: TGnvJSONWriter;
+  I, Unmapped: Integer;
+  Writer: TGnvJSONWriter;
   Name: string;
 begin
-	if Self = nil then Exit('');
-	Writer := TGnvJSONWriter.Create(nil);
-	try
-  	Unmapped := 0;
-		for I := 0 to GetItemCount - 1 do
+  if Self = nil then Exit('');
+  Writer := TGnvJSONWriter.Create(nil);
+  try
+    Unmapped := 0;
+    for I := 0 to GetItemCount - 1 do
     begin
       Name := GetName(I);
       if Map.IndexOf(Name) = -1 then
-			begin
-				if Unmapped = 0 then Writer.BeginObject;
+      begin
+        if Unmapped = 0 then Writer.BeginObject;
         Writer.WriteName(Name);
         GetItemByIndex(I).WriteTo(Writer);
-				Inc(Unmapped);
-			end;
+        Inc(Unmapped);
+      end;
     end;
-		if Unmapped > 0 then Writer.EndObject;
-		Result := Writer.Stream.ToString;
-	finally
-		Writer.Free;
-	end;
+    if Unmapped > 0 then Writer.EndObject;
+    Result := Writer.Stream.ToString;
+  finally
+    Writer.Free;
+  end;
 end;
 
 procedure TGnvJSONObject.Add(const AName: Variant; AValue: TGnvJSONData);
@@ -1444,8 +1444,8 @@ begin
     case VarType(Value) of
       varBoolean:   Item.FDataType := jstBoolean;
       varDouble,
-  		varInt64,
-  		varUINT64,
+      varInt64,
+      varUINT64,
       varInteger:   Item.FDataType := jstNumber;
       varString,
       varUString:   Item.FDataType := jstString;
@@ -1468,7 +1468,7 @@ procedure TGnvJSONObject.Merge(Data: TGnvJSONData;
   RemoveArrayDuplicates: Boolean = False; SkipKeys: TStrings = nil);
 var
   I: Integer;
-	Item: TGnvJSONData;
+  Item: TGnvJSONData;
   Obj: TGnvJSONObject;
 begin
   Obj := nil;
@@ -1632,18 +1632,18 @@ end;
 procedure TGnvJSONArray.DoParse(InitialChar: WideChar;
   const NextChar: TGnvJSONNextCharFunc; var EndingChar: WideChar);
 var
-  Ñ: WideChar;
+  ï¿½: WideChar;
   NewItem: TGnvJSONData;
 begin
   Assert(InitialChar = '[');
   repeat
-    NewItem := TGnvJSONData.Parse(NextChar, Ñ);
+    NewItem := TGnvJSONData.Parse(NextChar, ï¿½);
     if NewItem = nil then Break;
     Add(NewItem);
-    Ñ := SkipBlanks(Ñ, NextChar);
-  until Ñ <> ',';
-  if Ñ <> ']' then
-    RaiseJSONParseError('Invalid array termination character "%s"', Ñ);
+    ï¿½ := SkipBlanks(ï¿½, NextChar);
+  until ï¿½ <> ',';
+  if ï¿½ <> ']' then
+    RaiseJSONParseError('Invalid array termination character "%s"', ï¿½);
   EndingChar := ' ';
 end;
 
@@ -1773,9 +1773,9 @@ begin
   case VarType(FValue) of
     varEmpty:   Writer.WriteNull;
     varBoolean: Writer.WriteBoolean(TVarData(FValue).VBoolean);
-		varDouble:  Writer.WriteNumber(TVarData(FValue).VDouble);
-		varInt64:   Writer.WriteNumber(TVarData(FValue).VInt64);
-		varUInt64:  Writer.WriteNumber(TVarData(FValue).VUInt64);
+    varDouble:  Writer.WriteNumber(TVarData(FValue).VDouble);
+    varInt64:   Writer.WriteNumber(TVarData(FValue).VInt64);
+    varUInt64:  Writer.WriteNumber(TVarData(FValue).VUInt64);
     varInteger: Writer.WriteNumber(TVarData(FValue).VInteger);
     varString:  Writer.WriteString(string(TVarData(FValue).VString));
     varUString:

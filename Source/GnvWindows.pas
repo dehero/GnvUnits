@@ -3,19 +3,19 @@ unit GnvWindows;
 interface
 
 uses
-	Windows, Classes, SysUtils, Forms;
+  Windows, Classes, SysUtils, Forms;
 
 type
   TGnvMsgData = record
-		Msg: string;
+    Msg: string;
     Flags: Longint;
-	end;
+  end;
 
-	TGnvFileVersion = record
-		Major: Word;
-		Minor: Word;
-		Release: Word;
-		Build: Word;
+  TGnvFileVersion = record
+    Major: Word;
+    Minor: Word;
+    Release: Word;
+    Build: Word;
   end;
 
 function GnvGetCurrentUserName : string;
@@ -33,9 +33,9 @@ procedure GnvFileVersionToStream(Version: TGnvFileVersion; Stream: TStream);
 function GnvGetFileVersion(const FileName: string): TGnvFileVersion;
 
 function GnvMessageQuery(const Msg: string; Arguments: array of const;
-	Flags: LongInt): Integer; overload;
-function GnvMessageQuery(const Data: TGnvMsgData;	Arguments: array of const):
-	Integer; overload;
+  Flags: LongInt): Integer; overload;
+function GnvMessageQuery(const Data: TGnvMsgData;  Arguments: array of const):
+  Integer; overload;
 
 implementation
 
@@ -103,8 +103,8 @@ begin
   end;
 end;
 
-//  SampleWav := GetResourceAsPointer('SampleWav', 'wave', Size);
-//  SndPlaySound(SampleWav, SND_MEMORY or SND_NODEFAULT or SND_ASYNC);
+// SampleWav := GetResourceAsPointer('SampleWav', 'wave', Size);
+// SndPlaySound(SampleWav, SND_MEMORY or SND_NODEFAULT or SND_ASYNC);
 function GnvGetResourceAsPointer(ResName: PChar; ResType: PChar; out Size: LongWord): Pointer;
 var
   InfoBlock: HRSRC;
@@ -163,26 +163,26 @@ end;
 
 function GnvCompareFileVersion(Version1, Version2: TGnvFileVersion): Integer;
 begin
-	Result := CompareValue(Version1.Major, Version2.Major);
-	if Result = 0 then Result := CompareValue(Version1.Minor, Version2.Minor);
-	if Result = 0 then Result := CompareValue(Version1.Release, Version2.Release);
-	if Result = 0 then Result := CompareValue(Version1.Build, Version2.Build);
+  Result := CompareValue(Version1.Major, Version2.Major);
+  if Result = 0 then Result := CompareValue(Version1.Minor, Version2.Minor);
+  if Result = 0 then Result := CompareValue(Version1.Release, Version2.Release);
+  if Result = 0 then Result := CompareValue(Version1.Build, Version2.Build);
 end;
 
 function GnvFileVersion(Major, Minor, Release, Build: Word): TGnvFileVersion;
 begin
-	Result.Major := Major;
-	Result.Minor := Minor;
-	Result.Release := Release;
-	Result.Build := Build;
+  Result.Major := Major;
+  Result.Minor := Minor;
+  Result.Release := Release;
+  Result.Build := Build;
 end;
 
 function GnvFileVersionFromStream(Stream: TStream): TGnvFileVersion;
 begin
-	Stream.Read(Result.Major, 2);
-	Stream.Read(Result.Minor, 2);
-	Stream.Read(Result.Release, 2);
-	Stream.Read(Result.Build, 2);
+  Stream.Read(Result.Major, 2);
+  Stream.Read(Result.Minor, 2);
+  Stream.Read(Result.Release, 2);
+  Stream.Read(Result.Build, 2);
 end;
 
 function GnvFileVersionToStr(Version: TGnvFileVersion): string;
@@ -192,47 +192,47 @@ end;
 
 procedure GnvFileVersionToStream(Version: TGnvFileVersion; Stream: TStream);
 begin
-	Stream.Write(Version.Major, 2);
-	Stream.Write(Version.Minor, 2);
-	Stream.Write(Version.Release, 2);
-	Stream.Write(Version.Build, 2);
+  Stream.Write(Version.Major, 2);
+  Stream.Write(Version.Minor, 2);
+  Stream.Write(Version.Release, 2);
+  Stream.Write(Version.Build, 2);
 end;
 
 function GnvGetFileVersion(const FileName: string): TGnvFileVersion;
 var
-	VerInfoSize, VerValueSize, Dummy: Cardinal;
-	PVerInfo: Pointer;
-	PVerValue: PVSFixedFileInfo;
+  VerInfoSize, VerValueSize, Dummy: Cardinal;
+  PVerInfo: Pointer;
+  PVerValue: PVSFixedFileInfo;
 begin
-	Result := GnvFileVersion(0, 0, 0, 0);
-	VerInfoSize := GetFileVersionInfoSize(PChar(FileName), Dummy);
-	GetMem(PVerInfo, VerInfoSize);
-	try
-		if GetFileVersionInfo(PChar(FileName), 0, VerInfoSize, PVerInfo) then
-			if VerQueryValue(PVerInfo, '\', Pointer(PVerValue), VerValueSize) then
-			begin
-				Result.Major := HiWord(PVerValue^.dwFileVersionMS);
-				Result.Minor := LoWord(PVerValue^.dwFileVersionMS);
-				Result.Release := HiWord(PVerValue^.dwFileVersionLS);
-				Result.Build := LoWord(PVerValue^.dwFileVersionLS);
-			end;
-	finally
-		FreeMem(PVerInfo, VerInfoSize);
+  Result := GnvFileVersion(0, 0, 0, 0);
+  VerInfoSize := GetFileVersionInfoSize(PChar(FileName), Dummy);
+  GetMem(PVerInfo, VerInfoSize);
+  try
+    if GetFileVersionInfo(PChar(FileName), 0, VerInfoSize, PVerInfo) then
+      if VerQueryValue(PVerInfo, '\', Pointer(PVerValue), VerValueSize) then
+      begin
+        Result.Major := HiWord(PVerValue^.dwFileVersionMS);
+        Result.Minor := LoWord(PVerValue^.dwFileVersionMS);
+        Result.Release := HiWord(PVerValue^.dwFileVersionLS);
+        Result.Build := LoWord(PVerValue^.dwFileVersionLS);
+      end;
+  finally
+    FreeMem(PVerInfo, VerInfoSize);
   end;
 end;
 
 function GnvMessageQuery(const Msg: string; Arguments: array of const;
-	Flags: LongInt): Integer;
+  Flags: LongInt): Integer;
 var
   S: string;
 begin
-	S := Format(Msg, Arguments);
+  S := Format(Msg, Arguments);
   Result := MessageBox(Application.Handle, PChar(S), PChar(Application.Title), Flags);
 end;
 
 function GnvMessageQuery(const Data: TGnvMsgData; Arguments: array of const): Integer;
 begin
-	Result := GnvMessageQuery(Data.Msg, Arguments, Data.Flags);
+  Result := GnvMessageQuery(Data.Msg, Arguments, Data.Flags);
 end;
 
 end.
