@@ -111,7 +111,6 @@ type
   TGnvJSONData = class(TPersistent)
   private
     FDataType: TGnvJSONDataType;
-    FOverridden: Boolean;
     FOwner: TGnvJSONData;
     procedure SetItemValue(const Name, Value: Variant);
     function GetObject(const Name: Variant): TGnvJSONObject;
@@ -151,7 +150,6 @@ type
     property ItemCount: Integer read GetItemCount;
     property Names[Index: Integer]: string read GetName;
     property Objects[const Name: Variant]: TGnvJSONObject read GetObject;
-    property Overridden: Boolean read FOverridden;
     property Owner: TGnvJSONData read FOwner;
     property Value: Variant read GetValue write SetValue;
     property Values[const Name: Variant]: Variant read GetItemValue write SetItemValue; default;
