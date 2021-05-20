@@ -17,7 +17,8 @@ procedure GnvCopyCharCase(var ToChar: WideChar; FromChar: WideChar);
 function GnvEntryCountStr(const Str: string; const SubStr: string): Cardinal;
 function GnvEntryCountText(const Text: string; const SubText: string): Cardinal;
 function GnvFilterText(const Text, Filter: string; Exclude: Boolean = False): string;
-function GnvFilterStr(const Str, Filter: string; Exclude: Boolean = False): string;
+function GnvFilterStr(const Str, Filter: string; Exclude: Boolean = False): string; overload;
+function GnvFilterStr(const Str, Filter: string; const Replace: string; Exclude: Boolean = False): string; overload;
 function GnvCreateGUIDStr(UpperCase: Boolean = False;
   Hyphen: Boolean = False; Brackets: Boolean = False): string;
 function GnvGUIDToStr(GUID: TGUID; UpperCase: Boolean = False;
@@ -81,6 +82,11 @@ begin
 end;
 
 function GnvFilterStr(const Str, Filter: string; Exclude: Boolean): string;
+begin
+  Result := GnvFilterStr(Str, Filter, '', Exclude);
+end;
+
+function GnvFilterStr(const Str, Filter: string; const Replace: string; Exclude: Boolean = False): string;
 var
   P: Integer;
   I: Integer;
@@ -92,7 +98,9 @@ begin
       P := Pos(Str[I], Filter);
 
       if ((P > 0) and not Exclude) or ((P = 0) and Exclude) then
-        Result := Result + Str[I];
+        Result := Result + Str[I]
+      else if Replace <> '' then
+        Result := Result + Replace;
     end
   else
     Result := Str;
@@ -611,6 +619,11 @@ begin
 
   if Length(Forms) > Plural then
     Result := Forms[Plural];
+end;
+
+function GnvReplaceStr(const Str, Chars, Replace: string; Exclude: Boolean = False): string;
+begin
+
 end;
 
 initialization
